@@ -1,0 +1,21 @@
+
+.block {
+    height: 2em;
+    width: 2em;
+    border: 1px solid black;
+}
+
+.rowBlock {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: stretch;
+}
+
+.red {
+    background-color: red
+}
+
+.green {
+    background-color: green
+}
