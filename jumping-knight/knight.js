@@ -64,7 +64,7 @@ const gridMaker = (function () {
 const jumper = (function () {
 
     const limit = 130;
-    let currentPos, intervalId,
+    let currentPos, intervalId, lastPos,
         grid, visitedPoints = [];
 
     const getValidJumps = (posI, posJ) => {
@@ -91,8 +91,10 @@ const jumper = (function () {
         const allValidJumps = getValidJumps(currentPos[0], currentPos[1]);
         if (!allValidJumps.length) {
             console.error("No more valid jumps");
+            lastPos = currentPos;
             if (intervalId)
                 clearInterval(intervalId);
+            jumper.render();
             return;
         }
         let minValue, nextJumpPos;
@@ -116,7 +118,10 @@ const jumper = (function () {
             for (let colInd = 0; colInd < row.length; colInd++) {
                 let value = grid[rowInd][colInd],
                     classNames = "block ";
-                classNames += visitedPoints.indexOf(value) === -1 ? "black" : "olive";
+                if (lastPos && lastPos[0] === rowInd && lastPos[1] === colInd)
+                    classNames += "red ";
+                else
+                    classNames += visitedPoints.indexOf(value) === -1 ? "black" : "olive";
                 rowHtml += "<div id='" + rowInd + "," + colInd + "' class='" + classNames + "'>" + "</div>";
             }
             _html += "<div class='rowBlock'>" + rowHtml + "</div>";
@@ -137,6 +142,7 @@ const jumper = (function () {
                 clearInterval(intervalId);
             visitedPoints = [];
             grid = gridMaker.createGrid(limit);
+            lastPos = null;
             jumper.render();
         };
     };
