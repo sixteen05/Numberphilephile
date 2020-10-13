@@ -63,8 +63,8 @@ const gridMaker = (function () {
 
 const jumper = (function () {
 
-    const gridSizeVsInterval = {};
-    let currentPos, intervalId, lastPos,
+    const gridSizeVsInterval = {50: 400, 150: 250, 1050: 100, 3050: 20};
+    let currentPos, intervalId, lastPos, dotted = false,
         limit = 150, grid, visitedPoints = [];
 
     const getValidJumps = (posI, posJ) => {
@@ -137,6 +137,14 @@ const jumper = (function () {
         document.getElementById("grid-size-" + limit).classList.add("active");
     }
 
+    const toggleDottedActive = (enable) => {
+        if (enable) {
+            document.getElementById("dotted-dividers").classList.add("active");
+        } else {
+            document.getElementById("dotted-dividers").classList.remove("active");
+        }
+    }
+
     const stopAutoPlay = () => {
         if (intervalId)
             clearInterval(intervalId);
@@ -165,7 +173,7 @@ const jumper = (function () {
             if (intervalId)
                 clearInterval(intervalId);
             else
-                intervalId = setInterval(nextJump, 50);
+                intervalId = setInterval(nextJump, gridSizeVsInterval[limit]);
         };
         document.getElementById("reset-grid").onclick = resetGrid;
         document.getElementById("grid-size-50").onclick = () => setGridSize(50);
