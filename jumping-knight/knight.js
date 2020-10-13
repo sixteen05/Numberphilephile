@@ -63,9 +63,9 @@ const gridMaker = (function () {
 
 const jumper = (function () {
 
-    const limit = 130;
+    const gridSizeVsInterval = {};
     let currentPos, intervalId, lastPos,
-        grid, visitedPoints = [];
+        limit = 150, grid, visitedPoints = [];
 
     const getValidJumps = (posI, posJ) => {
         const isValidPos = (_i, _j) => {
@@ -129,22 +129,49 @@ const jumper = (function () {
         return "<div class='root-grid'>" + _html + "</div>";
     };
 
+    const setSizeButtonsActive = () => {
+        document.getElementById("grid-size-50").classList.remove("active");
+        document.getElementById("grid-size-150").classList.remove("active");
+        document.getElementById("grid-size-1050").classList.remove("active");
+        document.getElementById("grid-size-3050").classList.remove("active");
+        document.getElementById("grid-size-" + limit).classList.add("active");
+    }
+
+    const stopAutoPlay = () => {
+        if (intervalId)
+            clearInterval(intervalId);
+        intervalId = null;
+    }
+
+    const resetGrid = () => {
+        stopAutoPlay();
+        visitedPoints = [];
+        currentPos = null;
+        grid = gridMaker.createGrid(limit);
+        lastPos = null;
+        jumper.render();
+    };
+
+    const setGridSize = (_limit) => {
+        stopAutoPlay();
+        limit = _limit;
+        resetGrid();
+        setSizeButtonsActive();
+    };
+
     const registerListeners = () => {
         document.getElementById("next-trigger").onclick = nextJump;
         document.getElementById("auto-trigger").onclick = () => {
             if (intervalId)
                 clearInterval(intervalId);
             else
-                intervalId = setInterval(nextJump, 450);
+                intervalId = setInterval(nextJump, 50);
         };
-        document.getElementById("reset-grid").onclick = () => {
-            if (intervalId)
-                clearInterval(intervalId);
-            visitedPoints = [];
-            grid = gridMaker.createGrid(limit);
-            lastPos = null;
-            jumper.render();
-        };
+        document.getElementById("reset-grid").onclick = resetGrid;
+        document.getElementById("grid-size-50").onclick = () => setGridSize(50);
+        document.getElementById("grid-size-150").onclick = () => setGridSize(150);
+        document.getElementById("grid-size-1050").onclick = () => setGridSize(1050);
+        document.getElementById("grid-size-3050").onclick = () => setGridSize(3050);
     };
 
     return {

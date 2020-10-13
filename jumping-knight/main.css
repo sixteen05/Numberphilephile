@@ -5,8 +5,11 @@ body {
 
 .block {
     background: #feffc4;
-    padding: 10px;
     height: 100%;
+}
+
+.block.dotted {
+    border: 1px dotted #4b5d67;
 }
 
 .rowBlock {

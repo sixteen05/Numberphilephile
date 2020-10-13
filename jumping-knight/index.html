@@ -15,20 +15,36 @@
 
 <div class="ui raised container">
     <div class="ui centered grid">
-        <div class="ten wide column">
+        <div class="three wide column">
+            <div class="ui center aligned inverted raised segment">
+                <div class="ui basic segment">
+                    <h4 class="ui inverted orange header">
+                        Run
+                    </h4>
+                    <div class="ui buttons vertical">
+                        <button class="ui button inverted olive" id="next-trigger">One Step</button>
+                        <button class="ui button inverted green" id="auto-trigger">Auto Run</button>
+                        <button class="ui button inverted secondary" id="reset-grid">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="eleven wide column">
             <div id="root"></div>
         </div>
-    </div>
-    <div class="ui center aligned inverted raised segment">
-        <div>
-            <button class="ui button inverted olive" id="next-trigger">One Step</button>
-            <button class="ui button inverted green" id="auto-trigger">Auto Run</button>
-            <button class="ui button inverted secondary" id="reset-grid">Reset</button>
+        <div class="two wide column">
+            <div class="ui center aligned inverted raised segment">
+                <div class="ui buttons vertical">
+                    <h4 class="ui inverted orange header">
+                        Num Blocks
+                    </h4>
+                    <button class="ui button inverted gray" id="grid-size-50">50</button>
+                    <button class="ui button inverted gray" id="grid-size-150">150</button>
+                    <button class="ui button inverted gray" id="grid-size-1050">1050</button>
+                    <button class="ui button inverted gray" id="grid-size-3050">3050</button>
+                </div>
+            </div>
         </div>
-        <div>
-        </div>
-
-
     </div>
 </div>
 
