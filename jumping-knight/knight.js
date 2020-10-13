@@ -118,6 +118,7 @@ const jumper = (function () {
             for (let colInd = 0; colInd < row.length; colInd++) {
                 let value = grid[rowInd][colInd],
                     classNames = "block ";
+                if (dotted) classNames += "dotted ";
                 if (lastPos && lastPos[0] === rowInd && lastPos[1] === colInd)
                     classNames += "red ";
                 else
@@ -137,12 +138,15 @@ const jumper = (function () {
         document.getElementById("grid-size-" + limit).classList.add("active");
     }
 
-    const toggleDottedActive = (enable) => {
-        if (enable) {
+    const toggleDottedActive = () => {
+        stopAutoPlay();
+        dotted = !dotted;
+        resetGrid();
+        if (dotted)
             document.getElementById("dotted-dividers").classList.add("active");
-        } else {
+        else
             document.getElementById("dotted-dividers").classList.remove("active");
-        }
+        document.getElementById("dotted-dividers").blur();
     }
 
     const stopAutoPlay = () => {
@@ -180,6 +184,7 @@ const jumper = (function () {
         document.getElementById("grid-size-150").onclick = () => setGridSize(150);
         document.getElementById("grid-size-1050").onclick = () => setGridSize(1050);
         document.getElementById("grid-size-3050").onclick = () => setGridSize(3050);
+        document.getElementById("dotted-dividers").onclick = () => toggleDottedActive();
     };
 
     return {
