@@ -123,7 +123,7 @@ const jumper = (function () {
                     classNames += "red ";
                 else
                     classNames += visitedPoints.indexOf(value) === -1 ? "black" : "olive";
-                rowHtml += "<div id='" + rowInd + "," + colInd + "' class='" + classNames + "'>" + "</div>";
+                rowHtml += "<div title='" + value + "' id='" + rowInd + "," + colInd + "' class='" + classNames + "'></div>";
             }
             _html += "<div class='rowBlock'>" + rowHtml + "</div>";
         }
