@@ -64,7 +64,7 @@ const gridMaker = (function () {
 const jumper = (function () {
 
     const gridSizeVsInterval = {50: 400, 150: 250, 1050: 100, 3050: 20};
-    let currentPos, intervalId, lastPos, dotted = false,
+    let currentPos, intervalId, lastPos, dotted = false, colorPattern = 0,
         limit = 150, grid, visitedPoints = [];
 
     const getValidJumps = (posI, posJ) => {
@@ -110,6 +110,25 @@ const jumper = (function () {
         jumper.render();
     };
 
+    const makeColor = (_i, _j) => {
+        let _num = "";
+        if (colorPattern === 0)
+            return "b5cc18";
+        else if (colorPattern === 1)
+            _num = grid[_i][_j];
+        else if (colorPattern === 2)
+            _num = Math.sqrt((_i ** 2) + (_j ** 2));
+        _num = parseInt(_num, 16) + "";
+        if (_num.length <= 3) {
+            while (_num.length < 3)
+                _num = "0" + _num;
+        } else {
+            while (_num.length < 6)
+                _num = "0" + _num;
+        }
+        return _num;
+    };
+
     const getHTMLFromGrid = () => {
         let _html = "";
         for (let rowInd = 0; rowInd < grid.length; rowInd++) {
@@ -117,13 +136,16 @@ const jumper = (function () {
             let rowHtml = "";
             for (let colInd = 0; colInd < row.length; colInd++) {
                 let value = grid[rowInd][colInd],
-                    classNames = "block ";
+                    classNames = "block ", colorStyle = "";
                 if (dotted) classNames += "dotted ";
                 if (lastPos && lastPos[0] === rowInd && lastPos[1] === colInd)
                     classNames += "red ";
+                else if (visitedPoints.indexOf(value) === -1)
+                    classNames += "black ";
                 else
-                    classNames += visitedPoints.indexOf(value) === -1 ? "black" : "olive";
-                rowHtml += "<div title='" + value + "' id='" + rowInd + "," + colInd + "' class='" + classNames + "'></div>";
+                    colorStyle = "style='background-color: #" + makeColor(rowInd, colInd) + "'";
+                rowHtml += "<div " + colorStyle + " title='" + value + "' id='" + rowInd + "," + colInd + "'" +
+                    " class='" + classNames + "'></div>";
             }
             _html += "<div class='rowBlock'>" + rowHtml + "</div>";
         }
@@ -136,6 +158,13 @@ const jumper = (function () {
         document.getElementById("grid-size-1050").classList.remove("active");
         document.getElementById("grid-size-3050").classList.remove("active");
         document.getElementById("grid-size-" + limit).classList.add("active");
+    }
+
+    const setPatternButtonsActive = () => {
+        document.getElementById("color-pattern-0").classList.remove("active");
+        document.getElementById("color-pattern-1").classList.remove("active");
+        document.getElementById("color-pattern-2").classList.remove("active");
+        document.getElementById("color-pattern-" + colorPattern).classList.add("active");
     }
 
     const toggleDottedActive = () => {
@@ -164,6 +193,13 @@ const jumper = (function () {
         jumper.render();
     };
 
+    const setColorPattern = (_ind) => {
+        stopAutoPlay();
+        colorPattern = _ind;
+        resetGrid();
+        setPatternButtonsActive();
+    }
+
     const setGridSize = (_limit) => {
         stopAutoPlay();
         limit = _limit;
@@ -185,6 +221,9 @@ const jumper = (function () {
         document.getElementById("grid-size-1050").onclick = () => setGridSize(1050);
         document.getElementById("grid-size-3050").onclick = () => setGridSize(3050);
         document.getElementById("dotted-dividers").onclick = () => toggleDottedActive();
+        document.getElementById("color-pattern-0").onclick = () => setColorPattern(0);
+        document.getElementById("color-pattern-1").onclick = () => setColorPattern(1);
+        document.getElementById("color-pattern-2").onclick = () => setColorPattern(2);
     };
 
     return {
