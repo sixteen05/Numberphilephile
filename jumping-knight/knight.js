@@ -211,7 +211,7 @@ const jumper = (function () {
         document.getElementById("next-trigger").onclick = nextJump;
         document.getElementById("auto-trigger").onclick = () => {
             if (intervalId)
-                clearInterval(intervalId);
+                stopAutoPlay();
             else
                 intervalId = setInterval(nextJump, gridSizeVsInterval[limit]);
         };
