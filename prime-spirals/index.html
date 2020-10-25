@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Numberphilephile - Prime Spirals</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.js"></script>
+    <link href="main.css" rel="stylesheet">
+    <script src="primes.js"></script>
+
+</head>
+<body onload="spiral.init()">
+
+<div class="ui raised container">
+    <div class="ui centered grid">
+        <div class="three wide column">
+            <div class="ui center aligned inverted raised segment">
+                <h4 class="ui inverted orange header">
+                    <a href="https://www.youtube.com/watch?v=iFuR97YcSLM" target="_blank"
+                       title="Youtube Numberphile video of Prime spirals">
+                        Watch Video
+                    </a>
+                </h4>
+            </div>
+            <div class="ui center aligned inverted raised segment">
+                <h4 class="ui inverted orange header">
+                    Scroll over grid to interact
+                </h4>
+                <div class="ui inverted indicating progress" data-total="20" data-value="5" id="scroll-progress">
+                    <div class="bar">
+                        <div class="progress"></div>
+                    </div>
+                    <div class="label">Scroll Progress</div>
+                </div>
+            </div>
+            <div class="ui center aligned inverted raised segment">
+                <h4 class="ui inverted red header">
+                    Note: If there is a lag while scrolling, it is because of rendering and not calculating primes
+                </h4>
+            </div>
+        </div>
+        <div class="eleven wide column">
+            <div id="root"></div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
+
