@@ -137,10 +137,11 @@ const spiral = (function () {
             gridSize = prevSize;
             resetGrid();
         }
+        return false;
     };
 
     const registerListeners = () => {
-        document.getElementById("root").onwheel = (e) => updateGridSize(e);
+        document.getElementById("root").onwheel = updateGridSize;
         $("#scroll-progress").progress({percent: 0});
     };
 

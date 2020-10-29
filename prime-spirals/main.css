@@ -5,6 +5,8 @@ body {
 
 .block {
     background: #feffc4;
+    display: flex;
+    justify-content: space-around;
     align-items: center;
     color: #FFFFFFE6;
 }
