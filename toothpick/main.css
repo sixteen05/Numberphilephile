@@ -1,0 +1,41 @@
+body {
+    padding-top: 50px;
+    background-color: #4b5d67;
+}
+
+.block {
+    background: #feffc4;
+    align-items: center;
+    color: #FFFFFFE6;
+}
+
+.block.dotted {
+    border: 1px dotted #4b5d67;
+}
+
+.rowBlock {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(1px, 1fr));
+    text-align: center;
+}
+
+.root-grid {
+    display: grid;
+    width: 100%;
+}
+
+.block.black {
+    background-color: #1b1c1d;
+}
+
+.block.red {
+    background-color: #db2828;
+}
+
+.block.grey {
+    background-color: #767676;
+}
+
+.block.olive {
+    background-color: #b5cc18;
+}
