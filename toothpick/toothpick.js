@@ -25,13 +25,13 @@ const Utl = (function () {
             ctx.fillStyle = blackColor;
             ctx.fillRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
         },
-        drawVerticalToothpick: (ctx, cx, cy, latest) => {
-            ctx.fillStyle = oliveColor;
+        drawVerticalToothpick: (ctx, cx, cy, color, latest = []) => {
+            ctx.fillStyle = color;
             ctx.fillRect(cx, cy - (pickHeight / 2), pickWidth, pickHeight);
             latest.push([cx, cy]);
         },
-        drawHorizontalToothpick: (ctx, cx, cy, latest) => {
-            ctx.fillStyle = greyColor;
+        drawHorizontalToothpick: (ctx, cx, cy, color, latest = []) => {
+            ctx.fillStyle = color;
             ctx.fillRect(cx - (pickHeight / 2), cy, pickHeight, pickWidth);
             latest.push([cx, cy]);
         }
@@ -51,20 +51,22 @@ const toothpick = (function () {
                 ex = eachPick[0], ey = eachPick[1],
                 abovePick = [ex, ey - halfDiff],
                 belowPick = [ex, ey + halfDiff];
+            Utl.drawVerticalToothpick(ctx, ...eachPick, Utl.greyColor);
             if (Utl.getColorInd(ctx, ex, ey - halfDiff - Utl.pickWidth) === Utl.blackColor)
-                Utl.drawHorizontalToothpick(ctx, ...abovePick, upcomingHorizontals);
+                Utl.drawHorizontalToothpick(ctx, ...abovePick, Utl.oliveColor, upcomingHorizontals);
             if (Utl.getColorInd(ctx, ex, ey + halfDiff + Utl.pickWidth) === Utl.blackColor)
-                Utl.drawHorizontalToothpick(ctx, ...belowPick, upcomingHorizontals);
+                Utl.drawHorizontalToothpick(ctx, ...belowPick, Utl.oliveColor, upcomingHorizontals);
         }
         while (latestHorizontal.length) {
             let eachPick = latestHorizontal.pop(),
                 ex = eachPick[0], ey = eachPick[1],
                 leftPick = [ex - halfDiff, ey],
                 rightPick = [ex + halfDiff, ey];
+            Utl.drawHorizontalToothpick(ctx, ...eachPick, Utl.greyColor);
             if (Utl.getColorInd(ctx, ex - halfDiff - Utl.pickWidth, ey) === Utl.blackColor)
-                Utl.drawVerticalToothpick(ctx, ...leftPick, upcomingVerticals);
+                Utl.drawVerticalToothpick(ctx, ...leftPick, Utl.oliveColor, upcomingVerticals);
             if (Utl.getColorInd(ctx, ex + halfDiff + Utl.pickWidth, ey) === Utl.blackColor)
-                Utl.drawVerticalToothpick(ctx, ...rightPick, upcomingVerticals);
+                Utl.drawVerticalToothpick(ctx, ...rightPick, Utl.oliveColor, upcomingVerticals);
         }
         latestHorizontal = upcomingHorizontals;
         latestVertical = upcomingVerticals;
@@ -76,10 +78,11 @@ const toothpick = (function () {
             return;
         }
 
+        let canvasCenter = [ctx.canvas.clientWidth / 2, ctx.canvas.clientHeight / 2];
         latestVertical = [];
         latestHorizontal = [];
         Utl.clearCanvas(ctx);
-        Utl.drawVerticalToothpick(ctx, ctx.canvas.clientWidth / 2, ctx.canvas.clientHeight / 2, latestVertical);
+        Utl.drawVerticalToothpick(ctx, ...canvasCenter, Utl.oliveColor, latestVertical);
     };
 
     const registerListeners = () => {
